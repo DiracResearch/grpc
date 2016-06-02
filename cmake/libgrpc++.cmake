@@ -1,0 +1,135 @@
+#
+set(SOURCES
+	src/cpp/client/secure_credentials.h
+	src/cpp/common/secure_auth_context.h
+	src/cpp/server/secure_server_credentials.h
+	src/cpp/client/create_channel_internal.h
+	src/cpp/common/create_auth_context.h
+	src/cpp/server/dynamic_thread_pool.h
+	src/cpp/server/fixed_size_thread_pool.h
+	src/cpp/server/thread_pool_interface.h
+	src/cpp/client/secure_credentials.cc
+	src/cpp/common/auth_property_iterator.cc
+	src/cpp/common/secure_auth_context.cc
+	src/cpp/common/secure_channel_arguments.cc
+	src/cpp/common/secure_create_auth_context.cc
+	src/cpp/server/secure_server_credentials.cc
+	src/cpp/client/channel.cc
+	src/cpp/client/client_context.cc
+	src/cpp/client/create_channel.cc
+	src/cpp/client/create_channel_internal.cc
+	src/cpp/client/credentials.cc
+	src/cpp/client/generic_stub.cc
+	src/cpp/client/insecure_credentials.cc
+	src/cpp/common/call.cc
+	src/cpp/common/channel_arguments.cc
+	src/cpp/common/completion_queue.cc
+	src/cpp/common/rpc_method.cc
+	src/cpp/proto/proto_utils.cc
+	src/cpp/server/async_generic_service.cc
+	src/cpp/server/create_default_thread_pool.cc
+	src/cpp/server/dynamic_thread_pool.cc
+	src/cpp/server/fixed_size_thread_pool.cc
+	src/cpp/server/insecure_server_credentials.cc
+	src/cpp/server/server.cc
+	src/cpp/server/server_builder.cc
+	src/cpp/server/server_context.cc
+	src/cpp/server/server_credentials.cc
+	src/cpp/util/byte_buffer.cc
+	src/cpp/util/slice.cc
+	src/cpp/util/status.cc
+	src/cpp/util/string_ref.cc
+	src/cpp/util/time.cc
+	src/cpp/codegen/grpc_library.cc
+)
+
+set(HEADERS
+	include/grpc++/channel.h
+	include/grpc++/client_context.h
+	include/grpc++/completion_queue.h
+	include/grpc++/create_channel.h
+	include/grpc++/generic/async_generic_service.h
+	include/grpc++/generic/generic_stub.h
+	include/grpc++/grpc++.h
+	include/grpc++/impl/call.h
+	include/grpc++/impl/client_unary_call.h
+	include/grpc++/impl/grpc_library.h
+	include/grpc++/impl/method_handler_impl.h
+	include/grpc++/impl/proto_utils.h
+	include/grpc++/impl/rpc_method.h
+	include/grpc++/impl/rpc_service_method.h
+	include/grpc++/impl/serialization_traits.h
+	include/grpc++/impl/server_builder_option.h
+	include/grpc++/impl/service_type.h
+	include/grpc++/impl/sync.h
+	include/grpc++/impl/sync_cxx11.h
+	include/grpc++/impl/sync_no_cxx11.h
+	include/grpc++/impl/thd.h
+	include/grpc++/impl/thd_cxx11.h
+	include/grpc++/impl/thd_no_cxx11.h
+	include/grpc++/security/auth_context.h
+	include/grpc++/security/auth_metadata_processor.h
+	include/grpc++/security/credentials.h
+	include/grpc++/security/server_credentials.h
+	include/grpc++/server.h
+	include/grpc++/server_builder.h
+	include/grpc++/server_context.h
+	include/grpc++/support/async_stream.h
+	include/grpc++/support/async_unary_call.h
+	include/grpc++/support/byte_buffer.h
+	include/grpc++/support/channel_arguments.h
+	include/grpc++/support/config.h
+	include/grpc++/support/config_protobuf.h
+	include/grpc++/support/slice.h
+	include/grpc++/support/status.h
+	include/grpc++/support/status_code_enum.h
+	include/grpc++/support/string_ref.h
+	include/grpc++/support/stub_options.h
+	include/grpc++/support/sync_stream.h
+	include/grpc++/support/time.h
+	include/grpc++/impl/codegen/async_stream.h
+	include/grpc++/impl/codegen/async_unary_call.h
+	include/grpc++/impl/codegen/call.h
+	include/grpc++/impl/codegen/call_hook.h
+	include/grpc++/impl/codegen/channel_interface.h
+	include/grpc++/impl/codegen/client_context.h
+	include/grpc++/impl/codegen/client_unary_call.h
+	include/grpc++/impl/codegen/completion_queue.h
+	include/grpc++/impl/codegen/completion_queue_tag.h
+	include/grpc++/impl/codegen/config.h
+	include/grpc++/impl/codegen/config_protobuf.h
+	include/grpc++/impl/codegen/grpc_library.h
+	include/grpc++/impl/codegen/method_handler_impl.h
+	include/grpc++/impl/codegen/proto_utils.h
+	include/grpc++/impl/codegen/rpc_method.h
+	include/grpc++/impl/codegen/rpc_service_method.h
+	include/grpc++/impl/codegen/security/auth_context.h
+	include/grpc++/impl/codegen/serialization_traits.h
+	include/grpc++/impl/codegen/server_context.h
+	include/grpc++/impl/codegen/server_interface.h
+	include/grpc++/impl/codegen/service_type.h
+	include/grpc++/impl/codegen/status.h
+	include/grpc++/impl/codegen/status_code_enum.h
+	include/grpc++/impl/codegen/string_ref.h
+	include/grpc++/impl/codegen/stub_options.h
+	include/grpc++/impl/codegen/sync.h
+	include/grpc++/impl/codegen/sync_cxx11.h
+	include/grpc++/impl/codegen/sync_no_cxx11.h
+	include/grpc++/impl/codegen/sync_stream.h
+	include/grpc++/impl/codegen/time.h
+)
+
+grpc_source_group(SOURCES)
+grpc_source_group(HEADERS)
+add_library(libgrpc++ ${SOURCES} ${HEADERS})
+target_link_libraries(libgrpc++	libgrpc)
+target_include_directories(
+  libgrpc++ 
+  PUBLIC include
+  PRIVATE .
+)
+set_target_properties(libgrpc++
+  PROPERTIES
+  FOLDER "gRPC"
+  CXX_STANDARD 11
+)

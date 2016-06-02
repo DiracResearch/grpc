@@ -82,7 +82,7 @@ class Server GRPC_FINAL : public ServerInterface, private GrpcLibraryCodegen {
    public:
     virtual ~GlobalCallbacks() {}
     /// Called before server is created.
-    virtual void UpdateArguments(ChannelArguments* args) {}
+    virtual void UpdateArguments(ChannelArguments* /* args */) {}
     /// Called before application callback for each synchronous server request
     virtual void PreSynchronousRequest(ServerContext* context) = 0;
     /// Called after application callback for each synchronous server request

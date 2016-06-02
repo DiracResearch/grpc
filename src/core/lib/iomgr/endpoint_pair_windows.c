@@ -52,7 +52,7 @@ static void create_sockets(SOCKET sv[2]) {
   SOCKADDR_IN addr;
   int addr_len = sizeof(addr);
 
-  lst_sock = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0,
+  lst_sock = WSASocketW(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0,
                        WSA_FLAG_OVERLAPPED);
   GPR_ASSERT(lst_sock != INVALID_SOCKET);
 
@@ -65,7 +65,7 @@ static void create_sockets(SOCKET sv[2]) {
   GPR_ASSERT(getsockname(lst_sock, (struct sockaddr *)&addr, &addr_len) !=
              SOCKET_ERROR);
 
-  cli_sock = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0,
+  cli_sock = WSASocketW(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0,
                        WSA_FLAG_OVERLAPPED);
   GPR_ASSERT(cli_sock != INVALID_SOCKET);
 

@@ -1,0 +1,78 @@
+#
+set(SOURCES
+  src/core/lib/profiling/basic_timers.c                    
+  src/core/lib/profiling/stap_timers.c                     
+  src/core/lib/profiling/timers.h                          
+  src/core/lib/support/alloc.c                                               
+  src/core/lib/support/avl.c                                                 
+  src/core/lib/support/backoff.c                                             
+  src/core/lib/support/backoff.h                                             
+  src/core/lib/support/block_annotate.h                                      
+  src/core/lib/support/cmdline.c                                             
+  src/core/lib/support/cpu_iphone.c                                          
+  src/core/lib/support/cpu_linux.c                                           
+  src/core/lib/support/cpu_posix.c                                           
+  src/core/lib/support/cpu_windows.c                                         
+  src/core/lib/support/env.h                                                 
+  src/core/lib/support/env_linux.c                                           
+  src/core/lib/support/env_posix.c                                           
+  src/core/lib/support/env_win32.c                                           
+  src/core/lib/support/histogram.c                                           
+  src/core/lib/support/host_port.c                                           
+  src/core/lib/support/load_file.c                                           
+  src/core/lib/support/load_file.h                                           
+  src/core/lib/support/log.c                                                 
+  src/core/lib/support/log_android.c                                         
+  src/core/lib/support/log_linux.c                                           
+  src/core/lib/support/log_posix.c                                           
+  src/core/lib/support/log_win32.c                                           
+  src/core/lib/support/murmur_hash.c                                         
+  src/core/lib/support/murmur_hash.h                                         
+  src/core/lib/support/slice.c                                               
+  src/core/lib/support/slice_buffer.c                                        
+  src/core/lib/support/stack_lockfree.c                                      
+  src/core/lib/support/stack_lockfree.h                                      
+  src/core/lib/support/string.c                                              
+  src/core/lib/support/string.h                                              
+  src/core/lib/support/string_posix.c                                        
+  src/core/lib/support/string_util_win32.c                                   
+  src/core/lib/support/string_win32.c                                        
+  src/core/lib/support/string_win32.h                                        
+  src/core/lib/support/subprocess_posix.c                                    
+  src/core/lib/support/subprocess_windows.c                                  
+  src/core/lib/support/sync.c                                                
+  src/core/lib/support/sync_posix.c                                          
+  src/core/lib/support/sync_win32.c                                          
+  src/core/lib/support/thd.c                                                 
+  src/core/lib/support/thd_internal.h                                        
+  src/core/lib/support/thd_posix.c                                           
+  src/core/lib/support/thd_win32.c                                           
+  src/core/lib/support/time.c                                                
+  src/core/lib/support/time_posix.c                                          
+  src/core/lib/support/time_precise.c                                        
+  src/core/lib/support/time_precise.h                                        
+  src/core/lib/support/time_win32.c                                          
+  src/core/lib/support/tls_pthread.c                                         
+  src/core/lib/support/tmpfile.h                                             
+  src/core/lib/support/tmpfile_msys.c                                        
+  src/core/lib/support/tmpfile_posix.c                                       
+  src/core/lib/support/tmpfile_win32.c                                       
+  src/core/lib/support/wrap_memcpy.c                                         
+)
+
+grpc_source_group(SOURCES)
+add_library(libgpr ${SOURCES})
+target_include_directories(
+  libgpr 
+  PUBLIC  include
+  PRIVATE .
+)
+if(MSVC)
+  target_compile_definitions(libgpr
+    PUBLIC  "_WIN32_WINNT=0x0601"
+  )
+endif()
+set_target_properties(libgpr
+  PROPERTIES
+  FOLDER "gRPC"
+)

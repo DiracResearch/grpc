@@ -154,7 +154,7 @@ void grpc_tcp_client_connect(grpc_exec_ctx *exec_ctx, grpc_closure *on_done,
     addr_len = sizeof(addr6_v4mapped);
   }
 
-  sock = WSASocket(AF_INET6, SOCK_STREAM, IPPROTO_TCP, NULL, 0,
+  sock = WSASocketW(AF_INET6, SOCK_STREAM, IPPROTO_TCP, NULL, 0,
                    WSA_FLAG_OVERLAPPED);
   if (sock == INVALID_SOCKET) {
     message = "Unable to create socket: %s";
