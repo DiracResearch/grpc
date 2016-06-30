@@ -60,6 +60,11 @@ set(SOURCES
   src/core/ext/lb_policy/pick_first/pick_first.c
   src/core/ext/lb_policy/round_robin/round_robin.c
 
+  src/core/ext/load_reporting/load_reporting.c
+  src/core/ext/load_reporting/load_reporting.h
+  src/core/ext/load_reporting/load_reporting_filter.c
+  src/core/ext/load_reporting/load_reporting_filter.h
+  
   src/core/ext/resolver/dns/native/dns_resolver.c
   src/core/ext/resolver/sockaddr/sockaddr_resolver.c
 
@@ -126,7 +131,7 @@ set(SOURCES
   src/core/lib/channel/http_server_filter.h                                    
 
   src/core/lib/compression/algorithm_metadata.h                                  
-  src/core/lib/compression/compression_algorithm.c                                 
+  src/core/lib/compression/compression.c                                 
   src/core/lib/compression/message_compress.c                                    
   src/core/lib/compression/message_compress.h 
                                   
@@ -140,81 +145,93 @@ set(SOURCES
   src/core/lib/http/parser.c                                             
   src/core/lib/http/parser.h                                             
 
-  src/core/lib/iomgr/closure.c                                           
-  src/core/lib/iomgr/closure.h                                           
-  src/core/lib/iomgr/endpoint.c                                          
-  src/core/lib/iomgr/endpoint.h                                          
-  src/core/lib/iomgr/endpoint_pair.h                                         
-  src/core/lib/iomgr/endpoint_pair_posix.c                                     
-  src/core/lib/iomgr/endpoint_pair_windows.c                                     
-  src/core/lib/iomgr/ev_posix.c                                          
-  src/core/lib/iomgr/ev_posix.h                                          
-  src/core/lib/iomgr/ev_poll_posix.c                                          
-  src/core/lib/iomgr/ev_poll_posix.h                                          
-  src/core/lib/iomgr/executor.c                                          
-  src/core/lib/iomgr/executor.h                                          
-  src/core/lib/iomgr/exec_ctx.c                                          
-  src/core/lib/iomgr/exec_ctx.h                                          
-  src/core/lib/iomgr/iocp_windows.c                                        
-  src/core/lib/iomgr/iocp_windows.h                                        
-  src/core/lib/iomgr/iomgr.c                                             
-  src/core/lib/iomgr/iomgr.h                                             
-  src/core/lib/iomgr/iomgr_internal.h                                        
-  src/core/lib/iomgr/iomgr_posix.c                                         
-  src/core/lib/iomgr/iomgr_posix.h                                         
-  src/core/lib/iomgr/iomgr_windows.c                                         
-  src/core/lib/iomgr/pollset.h                                           
-  src/core/lib/iomgr/pollset_set.h                                         
-  src/core/lib/iomgr/pollset_set_windows.c                                     
-  src/core/lib/iomgr/pollset_set_windows.h                                     
-  src/core/lib/iomgr/pollset_windows.c                                       
-  src/core/lib/iomgr/pollset_windows.h                                       
-  src/core/lib/iomgr/resolve_address.h                                       
-  src/core/lib/iomgr/resolve_address_posix.c                                     
-  src/core/lib/iomgr/resolve_address_windows.c                                   
-  src/core/lib/iomgr/sockaddr.h                                          
-  src/core/lib/iomgr/sockaddr_posix.h                                        
-  src/core/lib/iomgr/sockaddr_utils.c                                        
-  src/core/lib/iomgr/sockaddr_utils.h                                        
-  src/core/lib/iomgr/sockaddr_win32.h                                        
-  src/core/lib/iomgr/socket_utils_common_posix.c                                   
-  src/core/lib/iomgr/socket_utils_linux.c                                      
-  src/core/lib/iomgr/socket_utils_posix.c                                      
-  src/core/lib/iomgr/socket_utils_posix.h                                      
-  src/core/lib/iomgr/socket_windows.c                                        
-  src/core/lib/iomgr/socket_windows.h                                        
-  src/core/lib/iomgr/tcp_client.h                                          
-  src/core/lib/iomgr/tcp_client_posix.c                                      
-  src/core/lib/iomgr/tcp_client_windows.c                                      
-  src/core/lib/iomgr/tcp_posix.c                                           
-  src/core/lib/iomgr/tcp_posix.h                                           
-  src/core/lib/iomgr/tcp_server.h                                          
-  src/core/lib/iomgr/tcp_server_posix.c                                      
-  src/core/lib/iomgr/tcp_server_windows.c                                      
-  src/core/lib/iomgr/tcp_windows.c                                         
-  src/core/lib/iomgr/tcp_windows.h                                         
-  src/core/lib/iomgr/timer.c                                             
-  src/core/lib/iomgr/timer.h                                             
-  src/core/lib/iomgr/timer_heap.c                                          
-  src/core/lib/iomgr/timer_heap.h                                          
-  src/core/lib/iomgr/time_averaged_stats.c                                     
-  src/core/lib/iomgr/time_averaged_stats.h                                     
-  src/core/lib/iomgr/udp_server.c                                          
-  src/core/lib/iomgr/udp_server.h                                          
-  src/core/lib/iomgr/unix_sockets_posix.c                                      
-  src/core/lib/iomgr/unix_sockets_posix.h                                      
-  src/core/lib/iomgr/unix_sockets_posix_noop.c                                   
-  src/core/lib/iomgr/wakeup_fd_eventfd.c                                       
-  src/core/lib/iomgr/wakeup_fd_nospecial.c                                     
-  src/core/lib/iomgr/wakeup_fd_pipe.c                                        
-  src/core/lib/iomgr/wakeup_fd_pipe.h                                        
-  src/core/lib/iomgr/wakeup_fd_posix.c                                       
-  src/core/lib/iomgr/wakeup_fd_posix.h                                       
-  src/core/lib/iomgr/workqueue.h                                           
-  src/core/lib/iomgr/workqueue_posix.c                                       
-  src/core/lib/iomgr/workqueue_posix.h                                       
-  src/core/lib/iomgr/workqueue_windows.c                                       
-  src/core/lib/iomgr/workqueue_windows.h                                       
+  src/core/lib/iomgr/closure.c
+  src/core/lib/iomgr/closure.h
+  src/core/lib/iomgr/endpoint.c
+  src/core/lib/iomgr/endpoint.h
+  src/core/lib/iomgr/endpoint_pair.h
+  src/core/lib/iomgr/endpoint_pair_posix.c
+  src/core/lib/iomgr/endpoint_pair_windows.c
+  src/core/lib/iomgr/error.c
+  src/core/lib/iomgr/error.h
+  src/core/lib/iomgr/ev_epoll_linux.c
+  src/core/lib/iomgr/ev_epoll_linux.h
+  src/core/lib/iomgr/ev_poll_and_epoll_posix.c
+  src/core/lib/iomgr/ev_poll_and_epoll_posix.h
+  src/core/lib/iomgr/ev_poll_posix.c
+  src/core/lib/iomgr/ev_poll_posix.h
+  src/core/lib/iomgr/ev_posix.c
+  src/core/lib/iomgr/ev_posix.h
+  src/core/lib/iomgr/executor.c
+  src/core/lib/iomgr/executor.h
+  src/core/lib/iomgr/exec_ctx.c
+  src/core/lib/iomgr/exec_ctx.h
+  src/core/lib/iomgr/iocp_windows.c
+  src/core/lib/iomgr/iocp_windows.h
+  src/core/lib/iomgr/iomgr.c
+  src/core/lib/iomgr/iomgr.h
+  src/core/lib/iomgr/iomgr_internal.h
+  src/core/lib/iomgr/iomgr_posix.c
+  src/core/lib/iomgr/iomgr_posix.h
+  src/core/lib/iomgr/iomgr_windows.c
+  src/core/lib/iomgr/load_file.c
+  src/core/lib/iomgr/load_file.h
+  src/core/lib/iomgr/network_status_tracker.c
+  src/core/lib/iomgr/network_status_tracker.h
+  src/core/lib/iomgr/polling_entity.c
+  src/core/lib/iomgr/polling_entity.h
+  src/core/lib/iomgr/pollset.h
+  src/core/lib/iomgr/pollset_set.h
+  src/core/lib/iomgr/pollset_set_windows.c
+  src/core/lib/iomgr/pollset_set_windows.h
+  src/core/lib/iomgr/pollset_windows.c
+  src/core/lib/iomgr/pollset_windows.h
+  src/core/lib/iomgr/resolve_address.h
+  src/core/lib/iomgr/resolve_address_posix.c
+  src/core/lib/iomgr/resolve_address_windows.c
+  src/core/lib/iomgr/sockaddr.h
+  src/core/lib/iomgr/sockaddr_posix.h
+  src/core/lib/iomgr/sockaddr_utils.c
+  src/core/lib/iomgr/sockaddr_utils.h
+  src/core/lib/iomgr/sockaddr_windows.h
+  src/core/lib/iomgr/socket_utils_common_posix.c
+  src/core/lib/iomgr/socket_utils_linux.c
+  src/core/lib/iomgr/socket_utils_posix.c
+  src/core/lib/iomgr/socket_utils_posix.h
+  src/core/lib/iomgr/socket_windows.c
+  src/core/lib/iomgr/socket_windows.h
+  src/core/lib/iomgr/tcp_client.h
+  src/core/lib/iomgr/tcp_client_posix.c
+  src/core/lib/iomgr/tcp_client_windows.c
+  src/core/lib/iomgr/tcp_posix.c
+  src/core/lib/iomgr/tcp_posix.h
+  src/core/lib/iomgr/tcp_server.h
+  src/core/lib/iomgr/tcp_server_posix.c
+  src/core/lib/iomgr/tcp_server_windows.c
+  src/core/lib/iomgr/tcp_windows.c
+  src/core/lib/iomgr/tcp_windows.h
+  src/core/lib/iomgr/timer.c
+  src/core/lib/iomgr/timer.h
+  src/core/lib/iomgr/timer_heap.c
+  src/core/lib/iomgr/timer_heap.h
+  src/core/lib/iomgr/time_averaged_stats.c
+  src/core/lib/iomgr/time_averaged_stats.h
+  src/core/lib/iomgr/udp_server.c
+  src/core/lib/iomgr/udp_server.h
+  src/core/lib/iomgr/unix_sockets_posix.c
+  src/core/lib/iomgr/unix_sockets_posix.h
+  src/core/lib/iomgr/unix_sockets_posix_noop.c
+  src/core/lib/iomgr/wakeup_fd_eventfd.c
+  src/core/lib/iomgr/wakeup_fd_nospecial.c
+  src/core/lib/iomgr/wakeup_fd_pipe.c
+  src/core/lib/iomgr/wakeup_fd_pipe.h
+  src/core/lib/iomgr/wakeup_fd_posix.c
+  src/core/lib/iomgr/wakeup_fd_posix.h
+  src/core/lib/iomgr/workqueue.h
+  src/core/lib/iomgr/workqueue_posix.c
+  src/core/lib/iomgr/workqueue_posix.h
+  src/core/lib/iomgr/workqueue_windows.c
+  src/core/lib/iomgr/workqueue_windows.h
 
   src/core/lib/json/json.c                                             
   src/core/lib/json/json.h                                             
@@ -253,7 +270,6 @@ set(SOURCES
   src/core/lib/surface/metadata_array.c                                      
   src/core/lib/surface/server.c                                          
   src/core/lib/surface/server.h                                          
-  src/core/lib/surface/surface_trace.h                                       
   src/core/lib/surface/validate_metadata.c                                     
   src/core/lib/surface/version.c                                           
 
@@ -285,7 +301,7 @@ set(HEADERS
   include/grpc/impl/codegen/atm.h
   include/grpc/impl/codegen/atm_gcc_atomic.h
   include/grpc/impl/codegen/atm_gcc_sync.h
-  include/grpc/impl/codegen/atm_win32.h
+  include/grpc/impl/codegen/atm_windows.h
   include/grpc/impl/codegen/byte_buffer.h
   include/grpc/impl/codegen/byte_buffer_reader.h
   include/grpc/impl/codegen/compression_types.h
@@ -300,10 +316,14 @@ set(HEADERS
   include/grpc/impl/codegen/sync.h
   include/grpc/impl/codegen/sync_generic.h
   include/grpc/impl/codegen/sync_posix.h
-  include/grpc/impl/codegen/sync_win32.h
+  include/grpc/impl/codegen/sync_windows.h
   include/grpc/impl/codegen/time.h
 )
 
+grpc_source_group(SOURCES)
+grpc_source_group(HEADERS)
+grpc_source_group(libgrpc_cpp_source_files)
+grpc_source_group(libgrpc_cpp_header_files)
 add_library(libgrpc ${SOURCES} ${HEADERS}
 	${libgrpc_cpp_source_files}
 	${libgrpc_cpp_header_files}

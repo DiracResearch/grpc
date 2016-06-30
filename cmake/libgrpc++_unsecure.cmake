@@ -40,7 +40,7 @@ set(libgrpc_cpp_unsecure_header_files
 	include/grpc++/impl/client_unary_call.h
 	include/grpc++/impl/grpc_library.h
 	include/grpc++/impl/method_handler_impl.h
-	include/grpc++/impl/proto_utils.h
+	#include/grpc++/impl/proto_utils.h
 	include/grpc++/impl/rpc_method.h
 	include/grpc++/impl/rpc_service_method.h
 	include/grpc++/impl/serialization_traits.h
@@ -64,7 +64,7 @@ set(libgrpc_cpp_unsecure_header_files
 	include/grpc++/support/byte_buffer.h
 	include/grpc++/support/channel_arguments.h
 	include/grpc++/support/config.h
-	include/grpc++/support/config_protobuf.h
+	#include/grpc++/support/config_protobuf.h
 	include/grpc++/support/slice.h
 	include/grpc++/support/status.h
 	include/grpc++/support/status_code_enum.h
