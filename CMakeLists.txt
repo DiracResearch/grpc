@@ -65,7 +65,7 @@ if(NOT protobuf_BUILD_TESTS)
   set(protobuf_BUILD_TESTS OFF CACHE BOOL "Build protobuf tests")
 endif()
 
-add_subdirectory(${BORINGSSL_ROOT_DIR} third_party/boringssl)
+#add_subdirectory(${BORINGSSL_ROOT_DIR} third_party/boringssl)
 add_subdirectory(${PROTOBUF_ROOT_DIR}/cmake third_party/protobuf)
 add_subdirectory(${ZLIB_ROOT_DIR} third_party/zlib)
 
@@ -973,7 +973,7 @@ add_library(grpc++_unsecure
 
 target_include_directories(grpc++_unsecure
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
   PRIVATE ${BORINGSSL_ROOT_DIR}/include
   PRIVATE ${PROTOBUF_ROOT_DIR}/src
   PRIVATE ${ZLIB_ROOT_DIR}
