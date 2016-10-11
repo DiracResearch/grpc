@@ -210,7 +210,7 @@
 #define GPR_LINUX_EPOLL 1
 #endif
 #if __GLIBC_PREREQ(2, 10)
-#define GPR_LINUX_SOCKETUTILS 1
+//#define GPR_LINUX_SOCKETUTILS 1
 #endif
 #endif
 #define GPR_LINUX_ENV 1
