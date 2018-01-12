@@ -89,3 +89,7 @@ if (NOT PROTOC_COMMAND OR NOT GRPC_CPP_PLUG)
         set(GRPC_CPP_PLUG $<TARGET_FILE:grpc_cpp_plugin> CACHE FILEPATH "")
     endif()
 endif()
+
+if (MSVC)
+    include(${CMAKE_CURRENT_LIST_DIR}/target_folders.cmake)
+endif()
