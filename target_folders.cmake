@@ -13,11 +13,11 @@ set(GRPC_TARGETS
   grpc++
 )
 
-set_target_properties(
-  ${GRPC_TARGETS}
-  PROPERTIES
-  FOLDER "Libraries/gRPC"
-)
+foreach(target ${GRPC_TARGETS})
+	if(TARGET ${target})
+		set_target_properties(${target} PROPERTIES FOLDER "Libraries/gRPC")
+	endif()
+endforeach()
 
 set(SSL_TARGETS
   aes
@@ -66,8 +66,8 @@ set(SSL_TARGETS
   x509v3
 )
 
-set_target_properties(
-  ${SSL_TARGETS}
-  PROPERTIES
-  FOLDER "Libraries/SSL"
-)
+foreach(target ${SSL_TARGETS})
+	if(TARGET ${target})
+		set_target_properties(${target} PROPERTIES FOLDER "Libraries/SSL")
+	endif()
+endforeach()
