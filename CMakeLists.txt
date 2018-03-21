@@ -2613,6 +2613,9 @@ if(WIN32 AND MSVC)
   endif()
 endif()
 
+if (UNIX)
+  target_compile_options(grpc++ PUBLIC "-Wno-unused-parameter")
+endif()
 
 target_include_directories(grpc++
   PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
