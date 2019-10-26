@@ -66,6 +66,7 @@ if (NOT PROTOC_COMMAND OR NOT GRPC_CPP_PLUG)
         # Generate makefiles, making sure CC and CXX env vars are unset (so that default system compiler is used)
         execute_process(COMMAND ${CMAKE_COMMAND} -E env --unset=CC --unset=CXX
                                 ${CMAKE_COMMAND}
+                                -DCMAKE_BUILD_TYPE:STRING=Release
                                 -DBORINGSSL_ROOT_DIR:STRING=${BORINGSSL_ROOT_DIR}
                                 -DPROTOBUF_ROOT_DIR:STRING=${PROTOBUF_ROOT_DIR}
                                 -DZLIB_ROOT_DIR:STRING=${ZLIB_ROOT_DIR}
@@ -78,10 +79,10 @@ if (NOT PROTOC_COMMAND OR NOT GRPC_CPP_PLUG)
                         WORKING_DIRECTORY "${workdir}")
 
         # Build needed targets
-        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target protoc
+        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target protoc --config Release
                         WORKING_DIRECTORY "${workdir}")
 
-        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target grpc_cpp_plugin
+        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target grpc_cpp_plugin --config Release
                         WORKING_DIRECTORY "${workdir}")
 
         set(PROTOC_COMMAND "${workdir}/third_party/protobuf/protoc" CACHE FILEPATH "" FORCE)
