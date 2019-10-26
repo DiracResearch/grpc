@@ -78,10 +78,10 @@ if (NOT PROTOC_COMMAND OR NOT GRPC_CPP_PLUG)
                         WORKING_DIRECTORY "${workdir}")
 
         # Build needed targets
-        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target protoc -- -j4
+        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target protoc
                         WORKING_DIRECTORY "${workdir}")
 
-        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target grpc_cpp_plugin -- -j4
+        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target grpc_cpp_plugin
                         WORKING_DIRECTORY "${workdir}")
 
         set(PROTOC_COMMAND "${workdir}/third_party/protobuf/protoc" CACHE FILEPATH "" FORCE)
