@@ -66,6 +66,7 @@ if (NOT PROTOC_COMMAND OR NOT GRPC_CPP_PLUG)
         # Generate makefiles, making sure CC and CXX env vars are unset (so that default system compiler is used)
         execute_process(COMMAND ${CMAKE_COMMAND} -E env --unset=CC --unset=CXX
                                 ${CMAKE_COMMAND}
+                                -DCMAKE_BUILD_TYPE:STRING=Release
                                 -DBORINGSSL_ROOT_DIR:STRING=${BORINGSSL_ROOT_DIR}
                                 -DPROTOBUF_ROOT_DIR:STRING=${PROTOBUF_ROOT_DIR}
                                 -DZLIB_ROOT_DIR:STRING=${ZLIB_ROOT_DIR}
@@ -78,14 +79,23 @@ if (NOT PROTOC_COMMAND OR NOT GRPC_CPP_PLUG)
                         WORKING_DIRECTORY "${workdir}")
 
         # Build needed targets
-        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target protoc -- -j4
+        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target protoc --config Release
                         WORKING_DIRECTORY "${workdir}")
 
-        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target grpc_cpp_plugin -- -j4
+        execute_process(COMMAND ${CMAKE_COMMAND} --build . --target grpc_cpp_plugin --config Release
                         WORKING_DIRECTORY "${workdir}")
 
-        set(PROTOC_COMMAND "${workdir}/third_party/protobuf/protoc" CACHE FILEPATH "" FORCE)
-        set(GRPC_CPP_PLUG "${workdir}/grpc_cpp_plugin" CACHE FILEPATH "" FORCE)
+        if(CMAKE_HOST_WIN32)
+            set(CONFIG_OUTPUT_FOLDER "Release/")
+            set(HOST_EXE_SUFFIX ".exe")
+        else()
+            set(CONFIG_OUTPUT_FOLDER "")
+            set(HOST_EXE_SUFFIX "")
+        endif()
+
+        set(PROTOC_COMMAND "${workdir}/third_party/protobuf/${CONFIG_OUTPUT_FOLDER}protoc${HOST_EXE_SUFFIX}" CACHE FILEPATH "" FORCE)
+        set(GRPC_CPP_PLUG "${workdir}/${CONFIG_OUTPUT_FOLDER}/grpc_cpp_plugin${HOST_EXE_SUFFIX}" CACHE FILEPATH "" FORCE)
+
     else()
         set(PROTOC_COMMAND $<TARGET_FILE:protoc> CACHE FILEPATH "")
         set(GRPC_CPP_PLUG $<TARGET_FILE:grpc_cpp_plugin> CACHE FILEPATH "")
